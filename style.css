@@ -1,0 +1,549 @@
+/* ---------------------------------------------------- */
+/* 0. 변수 및 전역 스타일 */
+/* ---------------------------------------------------- */
+:root {
+    /* 변수 유지 */
+    --bg-color: #f0f0f0; 
+    --light-shadow: #ffffff; 
+    --dark-shadow: #bebebe; 
+    
+    --main-text: #333;
+    --faded-text: #888;
+    --accent-color: #5c67f2; /* 메인 강조색 */
+    --orange-dot: #ffac33; /* QT/하이라이트 색상 */
+    --main-gap: 30px;
+
+    /* Neumorphism 섀도우 정의 */
+    --flat-shadow: 6px 6px 12px var(--dark-shadow), -6px -6px 12px var(--light-shadow);
+    --inset-shadow: inset 4px 4px 8px var(--dark-shadow), inset -4px -4px 8px var(--light-shadow);
+    --flat-shadow-small: 4px 4px 8px var(--dark-shadow), -4px -4px 8px var(--light-shadow);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ❗ [최종]: 포커스(Focus Ring) 및 기본 아웃라인 완전 제거 */
+input, button, select, textarea, a {
+    outline: none !important; /* 평소에도 아웃라인 방지 */
+    border: none !important;  /* 평소에도 테두리 방지 */
+}
+
+/* 포커스 상태에서는 box-shadow가 덮어씌워지지 않도록 inherit 유지 */
+input:focus,
+button:focus,
+select:focus,
+textarea:focus,
+a:focus {
+    box-shadow: inherit;
+}
+
+/* 1. 기본 레이아웃 */
+html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--main-text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%; 
+    padding: 40px;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1400px;
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----------------------------------
+ * 1. Neumorphism 기본 스타일 (재사용)
+ * ---------------------------------- */
+
+.neumorphism-flat {
+    border-radius: 30px; 
+    background: var(--bg-color);
+    box-shadow: var(--flat-shadow);
+}
+
+.neumorphism-inset {
+    border-radius: 20px; 
+    background: var(--bg-color);
+    box-shadow: var(--inset-shadow);
+}
+
+.neumorphism-flat-small {
+    border-radius: 20px; 
+    background: var(--bg-color);
+    box-shadow: var(--flat-shadow-small);
+    padding: 8px 15px; 
+    cursor: pointer;
+    transition: box-shadow 0.1s;
+}
+
+/* ----------------------------------
+ * 2. 헤더 및 레이아웃 
+ * ---------------------------------- */
+
+.app-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0; 
+    padding: 0;
+    flex-shrink: 0; 
+}
+
+.logo {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #555;
+}
+
+.main-content {
+    display: flex;
+    gap: var(--main-gap); 
+    padding-top: var(--main-gap);
+    flex-grow: 1; 
+    align-items: stretch; 
+}
+
+/* 좌측 패널 (왼쪽 칸) */
+.left-panel {
+    width: 350px; 
+    flex-shrink: 0;
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    justify-content: flex-start;
+}
+
+/* 우측 패널 */
+.right-panel {
+    flex-grow: 1; 
+    height: 100%; 
+    display: flex;
+}
+
+/* ----------------------------------
+ * 3. 좌측 패널 (시간/이벤트/할 일) 
+ * ---------------------------------- */
+
+.time-date-card {
+    text-align: left; 
+    padding: 30px;
+}
+
+.sun-icon {
+    font-size: 2.5em; 
+    color: var(--orange-dot);
+    margin-bottom: 10px;
+}
+
+.time {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.date {
+    font-size: 0.9em;
+    color: var(--faded-text);
+}
+
+.upcoming-events-card,
+.todo-list-card {
+    padding: 25px;
+}
+
+.upcoming-events-card h2,
+.todo-list-card h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: var(--accent-color);
+}
+.upcoming-events-card h2 i,
+.todo-list-card h2 i {
+    margin-right: 8px;
+    font-size: 0.9em;
+}
+
+
+.event-list, .todo-list {
+    list-style: none;
+    padding: 0;
+    min-height: 50px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.event-list li, .todo-list li {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 5px 0;
+    font-size: 0.95em;
+}
+
+.todo-list li.completed .todo-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.icon-plus-btn {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent-color);
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+.icon-plus-btn i {
+    margin-right: 5px;
+}
+
+
+.add-input-group {
+    display: flex;
+    margin-top: 15px;
+    gap: 10px;
+    align-items: center; 
+}
+
+.add-input-group input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    font-size: 1em;
+    color: var(--main-text); 
+}
+
+.add-input-group button {
+    width: 40px;
+    height: 40px;
+    border: none; 
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--main-text); 
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    font-size: 0.9em;
+}
+.delete-btn:hover {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+
+/* ----------------------------------
+ * 4. 캘린더 (우측 패널)
+ * ---------------------------------- */
+
+.calendar-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    padding: 40px; 
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+}
+
+.month-controls button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    color: var(--main-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; 
+    background: var(--bg-color);
+    box-shadow: var(--flat-shadow-small);
+}
+
+.month-controls button:active {
+    box-shadow: var(--flat-shadow-small); 
+}
+
+.month-year-select {
+    display: flex;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.month-year-select select {
+    cursor: pointer;
+    padding: 10px 15px; 
+    border-radius: 15px; 
+    background: var(--bg-color); 
+    /* border: none; 는 전역 설정으로 보장 */
+    box-shadow: var(--flat-shadow-small);
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.weekdays {
+    flex-shrink: 0;
+    margin-bottom: 15px; 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+}
+
+.day-name {
+    font-weight: 600;
+    color: var(--faded-text);
+    font-size: 0.9em;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.calendar-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 0; 
+}
+
+.date-cell {
+    width: 100%;
+    height: 100%;
+    min-height: 50px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 1.1em;
+    transition: box-shadow 0.2s, background-color 0.2s;
+}
+
+.date-cell:hover:not(.today-active):not(.faded) {
+    box-shadow: 3px 3px 6px var(--dark-shadow), -3px -3px 6px var(--light-shadow);
+}
+
+.faded {
+    color: var(--dark-shadow); 
+    cursor: default;
+}
+.faded:hover {
+    box-shadow: none !important;
+}
+
+.today-active {
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: 6px 6px 12px rgba(92, 103, 242, 0.5), 
+                -6px -6px 12px rgba(92, 103, 242, 0.5);
+}
+
+.highlight-dot::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--orange-dot); 
+}
+
+/* ----------------------------------
+ * 5. 모달 (팝업창) 스타일
+ * ---------------------------------- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 일반 모달 (Event) */
+.modal-content {
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    z-index: 1001;
+}
+
+/* 큰 모달 (QT) */
+.modal-content-lg {
+    width: 90%;
+    max-width: 650px; 
+    padding: 30px;
+    z-index: 1001;
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--dark-shadow);
+}
+
+.modal-header h3 {
+    color: var(--accent-color);
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+}
+.modal-header h3 i {
+    margin-right: 10px;
+}
+
+.close-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--faded-text);
+}
+
+.modal-body label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--main-text);
+    font-size: 0.95em;
+}
+
+/* ❗❗❗ [최종 수정]: 입력 필드 기본 상태에 Neumorphism inset 섀도우 적용 (테두리 제거) */
+.modal-body input,
+.modal-body select {
+    width: 100%;
+    padding: 10px;
+    /* border: none; 는 전역 설정으로 보장 */
+    border-radius: 10px;
+    font-size: 1em;
+    color: var(--main-text); 
+    background: var(--bg-color); 
+    box-shadow: var(--inset-shadow); /* 네오모피즘 기본 inset 섀도우 적용 */
+}
+
+.qt-section {
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.qt-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+    font-size: 1.1em;
+}
+
+.qt-verse-text {
+    font-style: italic;
+    color: var(--main-text);
+    background-color: #e6e6e6; 
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* ❗❗❗ [최종 수정]: 텍스트 영역 기본 상태에 Neumorphism inset 섀도우 적용 (테두리 제거) */
+.qt-textarea {
+    width: 100%;
+    box-sizing: border-box; 
+    /* border: none; 는 전역 설정으로 보장 */
+    padding: 10px;
+    border-radius: 10px;
+    resize: vertical; 
+    font-family: inherit;
+    font-size: 0.9em;
+    color: var(--main-text);
+    min-height: 80px;
+    background: var(--bg-color); 
+    box-shadow: var(--inset-shadow); /* 네오모피즘 기본 inset 섀도우 적용 */
+}
+
+.qt-textarea:focus {
+    /* 포커스 시는 의도된 섀도우로 대체 */
+    box-shadow: inset 1px 1px 3px var(--dark-shadow), inset -1px -1px 3px var(--light-shadow), 0 0 0 2px var(--accent-color); 
+}
+
+.modal-footer {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.primary-btn {
+    padding: 12px 25px;
+    /* border: none; 는 전역 설정으로 보장 */
+    border-radius: 25px;
+    background: var(--accent-color);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: var(--flat-shadow-small);
+    transition: background 0.2s;
+}
+
+.primary-btn:active {
+    background: var(--accent-color); 
+    box-shadow: var(--flat-shadow-small);
+}
+
+
+.user-actions .icon-group {
+    /* 해당 요소를 화면에서 완전히 제거합니다. (레이아웃 공간도 차지하지 않음) */
+    display: none;
+}

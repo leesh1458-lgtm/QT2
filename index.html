@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neumorphism 대시보드</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="app-header">
+            <div class="logo">Daily QT Planner</div>
+            <div class="user-actions">
+                <span class="welcome-text"></span>
+                <div class="icon-group">
+                    <i class="fas fa-bell action-icon neumorphism-flat-small"></i>
+                    <i class="fas fa-cog action-icon neumorphism-flat-small"></i>
+                    <span class="profile-icon neumorphism-flat-small">U</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            
+            <div class="left-panel">
+                
+                <div class="time-date-card neumorphism-flat">
+                    <i class="fas fa-sun sun-icon"></i>
+                    <div id="current-time" class="time">08:47 PM</div>
+                    <div id="current-date" class="date">2026년 1월 8일 (목)</div>
+                </div>
+
+                <div class="upcoming-events-card dashboard-panel neumorphism-flat">
+                    <h2><i class="fas fa-calendar-alt"></i> 다가오는 이벤트</h2>
+                    <ul id="upcoming-events-list" class="event-list">
+                        </ul>
+                    <button id="add-event-btn" class="input-group button icon-plus-btn neumorphism-flat-small">
+                        <i class="fas fa-plus"></i> 새 이벤트 추가
+                    </button>
+                </div>
+
+                <div class="todo-list-card dashboard-panel neumorphism-flat">
+                    <h2><i class="fas fa-clipboard-list"></i> 할 일 목록</h2>
+                    <ul id="todo-list" class="todo-list">
+                        </ul>
+                    <div class="add-input-group">
+                        <input type="text" id="new-todo-text" placeholder="새 할 일 입력..." class="neumorphism-inset">
+                        <button id="add-todo-btn" class="neumorphism-flat-small"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="right-panel">
+                <div id="calendar-card" class="calendar-card neumorphism-flat">
+                    <div class="calendar-header">
+                        <div class="month-controls">
+                            <button id="prev-month-btn" class="nav-button neumorphism-flat-small"><i class="fas fa-chevron-left"></i></button>
+                        </div>
+                        <div class="month-year-select">
+                            <select id="month-select" class="dropdown-display"></select>
+                            <select id="year-select" class="dropdown-display"></select>
+                        </div>
+                        <div class="month-controls">
+                            <button id="next-month-btn" class="nav-button neumorphism-flat-small"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="weekdays">
+                        <div class="day-name">SUN</div>
+                        <div class="day-name">MON</div>
+                        <div class="day-name">TUE</div>
+                        <div class="day-name">WED</div>
+                        <div class="day-name">THU</div>
+                        <div class="day-name">FRI</div>
+                        <div class="day-name">SAT</div>
+                    </div>
+                    
+                    <div id="calendar-grid" class="calendar-grid">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="event-modal-overlay" class="modal-overlay hidden">
+        <div id="event-modal" class="modal-content neumorphism-flat">
+            <div class="modal-header">
+                <h3 id="modal-title"><i class="fas fa-calendar-plus"></i> 새 이벤트 등록</h3>
+                <button class="close-btn" data-close-modal="event"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <label for="event-text">이벤트 내용</label>
+                <input type="text" id="event-text" class="neumorphism-inset">
+                
+                <label for="event-date">날짜</label>
+                <input type="date" id="event-date" class="neumorphism-inset">
+                
+                <label for="event-time">시간 (선택 사항)</label>
+                <input type="time" id="event-time" class="neumorphism-inset">
+            </div>
+            <div class="modal-footer">
+                <button id="save-event-btn" class="primary-btn">저장하기</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="qt-modal-overlay" class="modal-overlay hidden">
+        <div id="qt-modal" class="modal-content-lg neumorphism-flat">
+            <div class="modal-header">
+                <h3 id="qt-modal-title"><i class="fas fa-book-open"></i> QT 묵상 기록 (<span id="qt-display-date"></span>)</h3>
+                <button class="close-btn" data-close-modal="qt"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="qt-section neumorphism-inset">
+                    <h3>오늘의 말씀</h3>
+                    <div id="qt-verse-text" class="qt-verse-text">
+                        요한복음 3장 16절: 하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라.
+                    </div>
+                </div>
+
+                <div id="meditation-questions" class="qt-section neumorphism-inset">
+                    <h3>묵상과 기도</h3>
+                    
+                    <p>1. 이 말씀을 통해 알게 된 하나님은 누구신가요? </p>
+                    <textarea id="qt-textarea-1" class="qt-textarea" placeholder="묵상 기록..."></textarea>
+                    
+                    <p>2. 말씀 속에서 나에게 주시는 교훈/감동은 무엇인가요? </p>
+                    <textarea id="qt-textarea-2" class="qt-textarea" placeholder="교훈/감동 기록..."></textarea>
+                    
+                    <p>3. 이 교훈을 삶에 어떻게 적용할 수 있을까요? </p>
+                    <textarea id="qt-textarea-3" class="qt-textarea" placeholder="적용할 기록..."></textarea>
+                    
+                    <p>4. 이 말씀을 행동으로 옮긴다면 무엇을 바꿔야 할까? </p>
+                    <textarea id="qt-textarea-4" class="qt-textarea" placeholder="실천의 기록..."></textarea>
+                    
+                    <p>5. 하나님께 도움 요청해야 할 부분은? </p>
+                    <textarea id="qt-textarea-5" class="qt-textarea" placeholder="도움 요청의 기록..."></textarea>
+                    
+                    <p>6.오늘의 기도 제목은 무엇인가요? </p>
+                    <textarea id="qt-textarea-6" class="qt-textarea" placeholder="기도 제목 기록..."></textarea>
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-qt-btn" class="primary-btn">저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
